@@ -1,4 +1,5 @@
 const User = require('./model')
+const bcrypt = require('bcrypt')
 
 const SEED_USERS = [
   {
@@ -59,24 +60,31 @@ const controller = {
   // ---------------------------------------------------------------------------
   register: async (req, res, next) => {
     const { email, password } = req.body
+    const saltRounds = 1
 
-    const newUser = {
-      email,
-      password
-    }
-
-    User.create(newUser)
-      .then((err, user) => {
-        res.send({
-          message: `User is successfully registered`,
-          newUser
-        })
+    bcrypt
+      .hash(password, saltRounds)
+      .then(hash => {
+        console.log('hash:', hash)
+        return {
+          email,
+          hash
+        }
       })
-      .catch(error =>
-        res.status(400).send({
-          message: error
-        })
-      )
+      .then(newUser => {
+        User.create(newUser)
+          .then((err, user) => {
+            res.send({
+              message: `User is successfully registered`,
+              email
+            })
+          })
+          .catch(error =>
+            res.status(400).send({
+              message: error
+            })
+          )
+      })
   },
 
   // ---------------------------------------------------------------------------
