@@ -89,10 +89,27 @@ const controller = {
 
   // ---------------------------------------------------------------------------
   login: async (req, res, next) => {
-    res.send({
-      message: `User is successfully logged in`,
-      token: `ey.................`
-    })
+    const { email, password } = req.body
+
+    if (email && password) {
+      User.findOne({ email })
+        .then(user => {
+          return user.hash
+        })
+        .then(hash => {
+          bcrypt.compare(password, hash).then(response => {
+            res.send({
+              message: `User is successfully logged in`,
+              response,
+              token: `ey.................`
+            })
+          })
+        })
+    } else {
+      res.status(400).send({
+        message: `email and password are not provided`
+      })
+    }
   },
 
   // ---------------------------------------------------------------------------

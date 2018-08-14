@@ -11,12 +11,8 @@ const UserSchema = new Schema({
     unique: true
   },
   hash: {
-    type: String
-    // required: true
-  },
-  salt: {
-    type: String
-    // required: true
+    type: String,
+    required: true
   }
 })
 
