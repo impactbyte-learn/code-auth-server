@@ -1,0 +1,19 @@
+{
+  "name": "code-auth-server",
+  "version": "0.1.0",
+  "description": "Code Auth Server",
+  "main": "index.js",
+  "repository": "git@github.com:impactbyte-learn/code-auth-server.git",
+  "author": "M Haidar Hanif <git@mhaidarhanif.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "node index",
+    "dev": "node-dev index",
+    "mon": "nodemon index"
+  },
+  "devDependencies": {
+    "node-dev": "3.1.3",
+    "nodemon": "1.18.3"
+  }
+}
