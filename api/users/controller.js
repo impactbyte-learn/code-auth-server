@@ -67,7 +67,6 @@ const controller = {
     bcrypt
       .hash(password, saltRounds)
       .then(hash => {
-        console.log('hash:', hash)
         return {
           email,
           hash
@@ -76,17 +75,23 @@ const controller = {
       .then(newUser => {
         User.create(newUser)
           .then((err, user) => {
-            res.send({
+            const response = {
               message: `User is successfully registered`,
               email
-            })
+            }
+            res.send(response)
           })
           .catch(error =>
-            res.status(400).send({
-              message: error
+            res.status(409).send({
+              message: `User is already registered`
             })
           )
       })
+      .catch(error =>
+        res.status(500).send({
+          message: `Registration failed`
+        })
+      )
   },
 
   // ---------------------------------------------------------------------------
