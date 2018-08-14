@@ -1,5 +1,7 @@
 const User = require('./model')
+
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 const SEED_USERS = [
   {
@@ -92,19 +94,33 @@ const controller = {
     const { email, password } = req.body
 
     if (email && password) {
-      User.findOne({ email })
-        .then(user => {
-          return user.hash
-        })
-        .then(hash => {
-          bcrypt.compare(password, hash).then(response => {
+      User.findOne({ email }).then(user => {
+        bcrypt.compare(password, user.hash).then(response => {
+          if (response) {
+            const token = jwt.sign(
+              {
+                iat: Math.floor(Date.now() / 1000) - 30,
+                data: {
+                  id: user._id // from mongodb
+                }
+              },
+              process.env.JWT_SECRET || 'topsecret',
+              {
+                expiresIn: '1d'
+              }
+            )
+
             res.send({
               message: `User is successfully logged in`,
-              response,
-              token: `ey.................`
+              token
             })
-          })
+          } else {
+            res.send({
+              message: `Password is wrong`
+            })
+          }
         })
+      })
     } else {
       res.status(400).send({
         message: `email and password are not provided`
