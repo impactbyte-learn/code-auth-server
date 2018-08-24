@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
 const Schema = mongoose.Schema
 
-mongoose.connect('mongodb://localhost:27017/authserver')
+mongoose.connect(process.env.DB_URL)
 
 const UserSchema = new Schema({
   email: {

@@ -1,0 +1,7 @@
+{
+  "name": "code-auth-server",
+  "description": "Code Auth Server",
+  "repository": "https://github.com/impactbyte-learn/code-auth-server",
+  "keywords": ["code", "auth", "server", "backend"],
+  "image": "heroku/nodejs"
+}

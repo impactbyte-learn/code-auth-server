@@ -33,7 +33,12 @@
 					"name": "Get users",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/users",
@@ -144,26 +149,74 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Check token",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/users/checktoken",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"checktoken"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
-	"auth": {
-		"type": "bearer"
-	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "4b1c6699-42f7-43f1-ba8c-24b8efc237f6",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "681dd323-782a-40d3-a2b0-173b9fc44894",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
 	"variable": [
 		{
-			"id": "e8046d14-8525-49fa-9800-2b2f7ca477fe",
+			"id": "92c3dd21-3467-4ec1-a5d7-cf3dff89b279",
 			"key": "host",
 			"value": "localhost",
 			"type": "string"
 		},
 		{
-			"id": "63ca702a-4aa6-4092-bf4c-d62609a56a46",
+			"id": "1987d610-9f8e-4ff1-9e72-f4aed55267c8",
 			"key": "port",
 			"value": "3000",
 			"type": "string"
 		},
 		{
-			"id": "e9ece163-5114-4f4f-baaf-154fc9fd291f",
+			"id": "1d6f3cd4-e1b3-4c20-80bb-af6e848b2e4b",
 			"key": "url",
 			"value": "{{host}}:{{port}}",
 			"type": "string"
