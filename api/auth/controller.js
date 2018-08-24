@@ -15,15 +15,15 @@ const controller = {
     if (withToken) {
       const token = req.headers.authorization.split(' ')[1] || ''
 
-      try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET)
+      jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        if (error) {
+          res.status(400).send({
+            message: `Token is invalid when verifying`
+          })
+        }
         req.decoded = decoded
         next()
-      } catch {
-        res.status(400).send({
-          message: `Token is invalid when verifying`
-        })
-      }
+      })
     } else {
       res.status(400).send({
         message: `Token is not found in request headers`
