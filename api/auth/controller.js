@@ -15,7 +15,7 @@ const controller = {
     if (withToken) {
       const token = req.headers.authorization.split(' ')[1] || ''
 
-      jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+      jwt.verify(token, process.env.JWT_SECRET, (error, decoded) => {
         if (error) {
           res.status(400).send({
             message: `Token is invalid when verifying`
